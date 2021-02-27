@@ -3,6 +3,15 @@
   <router-view></router-view>
 </template>
 
+<script>
+export default {
+  created(){
+    this.$store.dispatch('tryLogin')
+    console.log("trie to login")
+  }
+}
+</script>
+
 <style>
 *{
   margin:0;

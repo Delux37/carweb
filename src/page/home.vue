@@ -3,21 +3,21 @@
         <nav-bar></nav-bar>
         <div id="container">
             <main id="main-content">
-                <item-card v-for = "car in objects" 
-                :key = "car"
+                <item-card v-for = "(car,index) in carList" 
+                :key = "index"
                 :model = car.model
                 :year = car.year
                 :region = car.region
-                :tags= car.tags
                 :price = car.price
-                :image = car.image
+                :image = car.images[0]
                  ></item-card>
             </main>
-        </div>           
+        </div>
     </div>    
 </template>
 
 <script>
+import axios from 'axios'
 import itemCard from '../UI/item-card.vue'
 import navBar from '../components/nav-bar.vue';
 export default {
@@ -27,51 +27,20 @@ export default {
     },
     data(){
         return {
-            objects: [
-                {
-                    model: 'BMW 328i',
-                     year: '2012',
-                     region: 'Tbilisi',
-                     tags: ['Gas', 'Sedan'],
-                     price: '7500$',
-                     image: ['../img/0/0.jpg'] 
-                },
-                {
-                     model: 'MERCEDES-BENZ GLA',
-                     year: '2017',
-                     region: 'Poti',
-                     tags: ['Gas', 'Jeep'],
-                     price: '27,500$',
-                     image: ['../img/0/0.jpg'] 
-                },
-                {
-                     model: 'AUDI A6',
-                     year: '2019',
-                     region: 'America',
-                     tags: ['Gas', 'Sedan'],
-                     price: '25,000$',
-                     image: ['../img/0/0.jpg'] 
-                },
-                {
-                    model: 'BMW 328i',
-                     year: '2012',
-                     region: 'Tbilisi',
-                     tags: ['Gas', 'Sedan'],
-                     price: '7500$',
-                     image: ['../img/0/0.jpg'] 
-                },
-                {
-                    model: 'BMW 328i',
-                     year: '2012',
-                     region: 'Tbilisi',
-                     tags: ['Gas', 'Sedan'],
-                     price: '7500$',
-                     image: ['../img/0/0.jpg'] 
-                },
-            ]
+            carList: [],
         }
+    },
+    mounted(){
+    axios.get('https://carweb-797f8-default-rtdb.firebaseio.com/carList.json')
+        .then((response ) => {
+            // handle success
+            for(let key in response.data){
+                for(let obj in response.data[key]){
+                    this.carList.push(response.data[key][obj]);
+                }
+            }
+        })
     }
-    
 }
 </script>
 

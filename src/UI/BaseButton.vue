@@ -1,22 +1,36 @@
 <template>
     <div>
-        <button :class="mode">
+        <button :class="mode" @click="clicked" v-if="!link">
             <span v-if="mode==='default'"><i class="fas fa-plus-circle plus"></i></span>
-            <span v-else><i class="fas fa-user-alt user"></i></span>
+            <span v-else-if="mode==='flat'"><i class="fas fa-user-alt user"></i></span>
             <slot></slot>
         </button>
+        <router-link v-else :to = "to" :class="mode">
+            <span v-if="mode==='default'"><i class="fas fa-plus-circle plus"></i></span>
+            <span v-else-if="mode==='flat'"><i class="fas fa-user-alt user"></i></span>
+            <slot></slot>
+        </router-link>
     </div>
 </template>
 
 <script>
 export default {
-    props: ['mode']
+    props: ['mode', 'link', 'to'],
+    methods: {
+        clicked(){
+           this.$emit('toggleLogIn')
+        },
+    }
 }
 </script>
 
 <style scoped>
-
-button{
+a{
+    text-decoration: none;
+    color: white;
+}
+button,
+a{
     background: none;
     outline: none;
     border: none;
@@ -28,6 +42,18 @@ button{
     padding: 5px 10px;
     cursor: pointer;
     /* box-shadow: 1px 1px 1px 1px rgba(192, 192, 192, 0.411); */
+}
+
+.withBackground{
+    background-color: #d4a44a;
+    color: white;
+    font-weight: 100;
+}
+
+.noBackground{
+    border: 2px solid #d4a44a;
+    color: #d4a44a;
+    font-weight: 100;
 }
 
 .user{

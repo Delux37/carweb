@@ -1,13 +1,13 @@
 <template>
     <div class="item-card">
-        <div class="img-container">
+        <div class="img-container" :style="'background-image: url(' + image + ')'">
             <img src=""/>
         </div>
         <div class="content-container">
             <p class="first-title"><span>{{ year }}</span> <span>{{ region }}</span></p>
             <h2>{{ model }}</h2>
             <p class="tags">
-                <span v-for="tag in tags" :key = "tag">
+                <span v-for="(tag,index) in tags" :key = "index">
                     {{ tag }}
                 </span>
             </p>
@@ -19,17 +19,23 @@
 
 <script>
 export default {
-    props: ['model', 'year', 'region', 'tags', 'price', 'image' ],
+    props: ['model', 'year', 'region', 'price', 'image' ],
+    data() {
+        return { 
+                    tags: ['gas', 'ass']
+        }
+    },
     computed: {
         // carImage() {
         //     return require( `${this.image}.jpg`); 
         // }
+
     },
     methods: {
         test(){
             console.log("IM here")
             console.log(this.carImage);
-        }
+        },
     }
     
 }
@@ -74,9 +80,10 @@ h3{
 .img-container{
     width: 100%;
     height: 60%;
-    background-image: url(https://i.picsum.photos/id/696/400/400.jpg?hmac=EcCTdZQF9Ag_jdaGMbRGGTzRgRlhptB9tulSnwrqG8I);
-    background-size: cover;
+    /* background-image: url(https://i.picsum.photos/id/696/400/400.jpg?hmac=EcCTdZQF9Ag_jdaGMbRGGTzRgRlhptB9tulSnwrqG8I); */
+    background-size: 300px 100%;
     background-repeat: no-repeat;
+    background-position: center;
 }
 .content-container{
     display: flex;

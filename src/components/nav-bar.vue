@@ -5,8 +5,13 @@
         </div>
         <nav>
             <ul id="main-nav">
-                <li><base-button mode="default">Add</base-button></li>
-                <li><base-button mode="flat">Log in</base-button></li>
+                <li><base-button link=true :to="checkAuth" mode="default">Add</base-button></li>
+                <li v-if="!isAuthenitcated">
+                    <base-button mode="flat" link=true to="/authentication">Log in</base-button>
+                </li>
+                <li v-else>
+                    <base-button mode="flat" @toggleLogIn="logOut">Log out</base-button>
+                </li>
                 <li><i class="fas fa-bars hamburger"></i>
                 <div id="drop-down">
                     <ul>
@@ -24,8 +29,24 @@ import baseButton from '../UI/BaseButton.vue';
 export default {
     components:{
         baseButton
+    },
+    computed: {
+        checkAuth(){
+            if(this.$store.getters.isAuthenticated){
+                return '/add'
+            }else {
+                return '/authentication'
+            }
+        },
+        isAuthenitcated(){
+            return this.$store.getters.isAuthenticated
+        },
+    },    
+    methods: {
+        logOut(){
+            this.$store.dispatch('logout')
+        }
     }
-    
 }
 </script>
 
