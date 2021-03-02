@@ -3,6 +3,7 @@
         <button :class="mode" @click="clicked" v-if="!link">
             <span v-if="mode==='default'"><i class="fas fa-plus-circle plus"></i></span>
             <span v-else-if="mode==='flat'"><i class="fas fa-user-alt user"></i></span>
+             <span v-else-if="mode==='submit'"><i class="far fa-paper-plane"></i></span>
             <slot></slot>
         </button>
         <router-link v-else :to = "to" :class="mode">
@@ -50,7 +51,8 @@ a{
     font-weight: 100;
 }
 
-.noBackground{
+.noBackground,
+.submit{
     border: 2px solid #d4a44a;
     color: #d4a44a;
     font-weight: 100;
@@ -73,5 +75,10 @@ a{
     background-color: #d4a44a;
     color: white;
     border: 1px solid #fdcb6e;
+}
+
+.submit{
+   padding: 10px 30px;
+   color: black
 }
 </style>

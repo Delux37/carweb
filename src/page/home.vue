@@ -1,6 +1,6 @@
 <template>
     <div id="parent">
-        <nav-bar></nav-bar>
+        <!-- <nav-bar></nav-bar> -->
         <div id="container">
             <main id="main-content">
                 <item-card v-for = "(car,index) in carList" 
@@ -19,10 +19,10 @@
 <script>
 import axios from 'axios'
 import itemCard from '../UI/item-card.vue'
-import navBar from '../components/nav-bar.vue';
+// import navBar from '../components/nav-bar.vue';
 export default {
     components: {
-        navBar,
+        // navBar,
         itemCard
     },
     data(){

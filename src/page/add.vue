@@ -1,48 +1,28 @@
 <template>
     <div>
-        <form>
-            <div class="form-control">
-                <label for="model"></label>
-                <input type="text" v-model="model" placeholder="Enter model of your car" id="model"/>
-            </div>
-            <div class="form-control">
-                <label for="year"></label>
-                <input type="text" v-model="year" placeholder="Enter year of your car" id="yer"/>
-            </div>
-            <div class="form-control">
-                <label for="region"></label>
-                <input type="text" v-model="region" placeholder="Enter place of your car" id="region"/>
-            </div>
-            <div class="form-control">
-                <label for="price"></label>
-                <input type="text" v-model="price" placeholder="Enter price of your car" id="price"/>
-            </div>
-            <div class="form-control">
-                <label for="photo">Choose photo</label>
-                <input type="file" 
-                  id="photo"
-                   @click="filePopUp"
-                    ref="fileInput"
-                     accept="image/*"
-                     @change.prevent="onFilePicked"/>
-            </div>
-            <div v-if="images.length">
-                <div v-for = "image in images" :key = "image">
-                     <img :src="image"/>
-                </div>
-            </div>
-            <button type="submit" @click.prevent = "sendPostRequest">Add</button>
-        </form>
+        <main-features></main-features>
+        <comfort-details></comfort-details>
+        <file-upload></file-upload>
+        <user-detail></user-detail>
+        <base-button mode="submit" id="btn">Submit</base-button>
     </div>
 </template>
 
 <script>
-// import baseButton from '../UI/BaseButton.vue'
 import axios from 'axios'
-
+import mainFeatures from '../components/add-page/car-main-features.vue'
+import comfortDetails from '../components/add-page/comfort-details.vue'
+import fileUpload from '../components/add-page/file-upload.vue'
+import userDetail from '../components/add-page/user-detail.vue'
+import baseButton from '../UI/BaseButton.vue'
 
 export default {
     components: {
+        mainFeatures,
+        comfortDetails,
+        fileUpload,
+        userDetail,
+        baseButton
         // baseButton
     },
     data(){
@@ -101,7 +81,11 @@ export default {
 </script>
 
 <style scoped>
-.onfido-sdk-ui-CustomFileInput-input{
+/* .onfido-sdk-ui-CustomFileInput-input{
   display: none !important 
+} */
+#btn{
+    text-align: center;
+    margin-bottom: 20px;
 }
 </style>

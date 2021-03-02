@@ -12,12 +12,13 @@
                 <li v-else>
                     <base-button mode="flat" @toggleLogIn="logOut">Log out</base-button>
                 </li>
-                <li><i class="fas fa-bars hamburger"></i>
-                <div id="drop-down">
+                <li id="menu"><i class="fas fa-bars hamburger">
+                    <div id="drop-down">
                     <ul>
                         <li>Contact</li>
                     </ul>
                 </div>
+                </i>
                 </li>
             </ul>
         </nav>
@@ -52,6 +53,9 @@ export default {
 
 
 <style scoped>
+#menu:hover #drop-down{
+    display: block;
+}
 #nav{
     width: 100%;
     height: 8vh;

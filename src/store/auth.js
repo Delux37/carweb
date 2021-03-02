@@ -1,5 +1,5 @@
 import axios from 'axios'
-let timer;
+// let timer;
 const store =  { 
 state: {
     isLoggedIn: false,
@@ -29,6 +29,7 @@ state: {
     auth(context, payload){
       const mode = payload.mode;
       if(mode == 'login'){
+        console.log('login')
         axios({
           method: 'post',
           url: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyArtc_zaruHWFQIzQx7CkATC-caYQoMYUk',
@@ -39,16 +40,16 @@ state: {
             returnSecureToken: true,
           }
           }).then((responseData) => {
-            const expiresIn = +responseData.expiresIn * 1000
+            const expiresIn = +responseData.data.expiresIn * 1000
             const expirationDate = new Date().getTime() + expiresIn;
 
             localStorage.setItem('token', responseData.data.idToken);
             localStorage.setItem('userId', responseData.data.localId);
             localStorage.setItem('tokenExpiration', expirationDate);
 
-            timer =  setTimeout(function() {
-              context.dispatch('logout')
-            }, expiresIn);
+            // timer =  setTimeout(function() {
+            //   context.dispatch('logout')
+            // }, expiresIn);
 
             context.commit('setUser', {
               token: responseData.data.idToken,
@@ -57,7 +58,6 @@ state: {
         });
       });
       }else{
-        console.log("in signup")
         axios({
           method: 'post',
           url: 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyArtc_zaruHWFQIzQx7CkATC-caYQoMYUk',
@@ -67,66 +67,42 @@ state: {
             returnSecureToken: true,
           }
           }).then((responseData) => {
-            const expiresIn = +responseData.expiresIn * 1000
+            const expiresIn = +responseData.data.expiresIn * 1000
             const expirationDate = new Date().getTime() + expiresIn;
 
+            console.log(responseData.data.idToken, "****", responseData.data.localId, "****", expirationDate)
             localStorage.setItem('token', responseData.data.idToken);
             localStorage.setItem('userId', responseData.data.localId);
             localStorage.setItem('tokenExpiration', expirationDate)
 
-            timer =  setTimeout(function() {
-              context.dispatch('logout')
-            }, expiresIn);
+            // timer =  setTimeout(function() {
+            //   context.dispatch('logout')
+            // }, expiresIn);
+
             context.commit('setUser', {
             token: responseData.data.idToken,
             userId: responseData.data.localId,
         });
       });
-
-
-
       }
-    },
-    // login(context,payload){
-        
+    },  
+    // logout(context){
+    //   localStorage.removeItem('token');
+    //   localStorage.removeItem('userId');
+    //   localStorage.removeItem('tokenExpiration');
+
+    //   clearTimeout(timer);
+
+    //   context.commit('setUser', {
+    //     token: null,
+    //     userId: null,
+    //   })
     // },
-    // signup(context, payload) {
-        
-    //     // const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyArtc_zaruHWFQIzQx7CkATC-caYQoMYUk', {
-    //     //     method: 'POST',
-    //     //     body: JSON.stringify({
-    //     //         email: payload.email,
-    //     //         password: payload.password,
-    //     //         returnSecureToken: true,
-    //     //     })
-    //     // });
-    //     // const responseData = await response.json();
-    //     // console.log(responseData);
-            
-    //     // context.commit('setUser', {
-    //     //     token: responseData.token,
-    //     //     userId: responseData.localId,
-    //     //     tokenExpiration: responseData.expiresIn
-    //     // });
-
-    // },
-    
-    logout(context){
-      localStorage.removeItem('token');
-      localStorage.removeItem('userId');
-      localStorage.removeItem('tokenExpiration');
-
-      clearTimeout(timer);
-
-      context.commit('setUser', {
-        token: null,
-        userId: null,
-      })
-    },
     tryLogin(context){
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('userId');
       const tokenExpiration = localStorage.getItem('tokenExpiration')
+      console.log("*************", token, userId, tokenExpiration, "*****************")
 
       const expiresIn = +tokenExpiration - new Date().getTime();
 
@@ -134,9 +110,9 @@ state: {
         return;
       }
 
-      timer = setTimeout(function(){
-        context.dispatch('logout'), expiresIn
-      })
+      // timer = setTimeout(function(){
+      //   context.dispatch('logout'), expiresIn
+      // })
 
       if(token && userId){
         context.commit('setUser', {
@@ -148,6 +124,8 @@ state: {
   },
   getters: {
     isAuthenticated(state){
+      console.log(state.token);
+      console.log(!!state.token);
       return !!state.token
     },
     token(state){
