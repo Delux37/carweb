@@ -7,74 +7,74 @@
             <div class="left-container">
                 <div class="form-group diff">
                     <p>Steering:</p>
-                    <input type="radio" name="steering-wheel" id="left-steering"/>
+                    <input type="radio" name="steering-wheel" id="left-steering" value="Left" v-model="carComfortDetails.steeringWheelSide"/>
                     <label for="left-steering">Left</label>
-                    <input type="radio" name="steering-wheel" id="right-steering"/>
+                    <input type="radio" name="steering-wheel" id="right-steering" value="Right" v-model="carComfortDetails.steeringWheelSide"/>
                     <label for="right-steering">Right</label>
                 </div>
                 <div class="form-group diff">
                     <p>Selling type:</p>
-                    <input type="radio" name="selling-type" id="selling"/>
+                    <input type="radio" name="selling-type" id="selling" value="Selling" v-model="carComfortDetails.sellingType"/>
                     <label for="selling">Selling</label>
-                    <input type="radio" name="selling-type" id="for-rent"/>
+                    <input type="radio" name="selling-type" id="for-rent" value="For rent" v-model="carComfortDetails.sellingType"/>
                     <label for="for-rent">For rent</label>
                 </div>
                 <div class="form-group">
-                    <input type="checkbox" id="electric-windows" value="Electric windows">
+                    <input type="checkbox" id="electric-windows" value="Electric windows" v-model="carComfortDetails.comforts">
                     <label for="electric-windows">El. windows</label>
                 </div>
                 <div class="form-group">
-                    <input type="checkbox" id="hydraulic" value="Hydraulic">
+                    <input type="checkbox" id="hydraulic" value="Hydraulic" v-model="carComfortDetails.comforts">
                     <label for="hydraulic">Hydraulic</label>
                 </div>
                 <div class="form-group">
-                    <input type="checkbox" id="rims" value="Rims">
+                    <input type="checkbox" id="rims" value="Rims" v-model="carComfortDetails.comforts">
                     <label for="rims">Rims</label>
                 </div>
             </div>
             <div class="right-container">
                 <div class="form-control">
-                    <input type="checkbox" id="seat-heater" value="seat-heater"/>
+                    <input type="checkbox" id="seat-heater" value="Seat heater" v-model="carComfortDetails.comforts"/>
                     <label for="seat-heater">Seat heater</label>
                 </div>
                         <div class="form-control">
-                    <input type="checkbox" id="central-lock" value="seat-heater"/>
+                    <input type="checkbox" id="central-lock" value="Central lock" v-model="carComfortDetails.comforts"/>
                     <label for="central-lock">Central-lock</label>
                 </div>
                         <div class="form-control">
-                    <input type="checkbox" id="alarm" value="seat-heater"/>
+                    <input type="checkbox" id="alarm" value="Alarm" v-model="carComfortDetails.comforts"/>
                     <label for="alarm">alarm</label>
                 </div>
                         <div class="form-control">
-                    <input type="checkbox" id="board-computer" value="seat-heater"/>
+                    <input type="checkbox" id="board-computer" value="Board computer" v-model="carComfortDetails.comforts"/>
                     <label for="board-computer">Board computer</label>
                 </div>
                         <div class="form-control">
-                    <input type="checkbox" id="navigation-system" value="seat-heater"/>
+                    <input type="checkbox" id="navigation-system" value="Navigation system" v-model="carComfortDetails.comforts"/>
                     <label for="navigation-systemr">Navigation-system</label>
                 </div>
                         <div class="form-control">
-                    <input type="checkbox" id="seat-heater" value="seat-heater"/>
-                    <label for="seat-heater">Seat heater</label>
+                    <input type="checkbox" id="sunroof" value="Sunroof" v-model="carComfortDetails.comforts"/>
+                    <label for="seat-heater">Sunroof</label>
                 </div>
                         <div class="form-control">
-                    <input type="checkbox" id="air-conditioner" value="seat-heater"/>
+                    <input type="checkbox" id="air-conditioner" value="Air conditioner" v-model="carComfortDetails.comforts"/>
                     <label for="air-conditioner">Air conditioner</label>
                 </div>
                         <div class="form-control">
-                    <input type="checkbox" id="abs" value="ABS"/>
+                    <input type="checkbox" id="abs" value="ABS" v-model="carComfortDetails.comforts"/>
                     <label for="abs">ABS</label>
                 </div>
                 <div class="form-control">
-                    <input type="checkbox" id="anti-skid" value="Antiskid"/>
+                    <input type="checkbox" id="anti-skid" value="Antiskid" v-model="carComfortDetails.comforts"/>
                     <label for="seat-heater">Seat heater</label>
                 </div>
                 <div class="form-control">
-                    <input type="checkbox" id="parking-control" value="Parking control" v-model="testArr"/>
+                    <input type="checkbox" id="parking-control" value="Parking control" v-model="carComfortDetails.comforts"/>
                     <label for="parking-control">Parking control</label>
                 </div>
                 <div class="form-control">
-                    <input type="checkbox" id="rear-view-camera" value="Rear view camera" v-model="testArr"/>
+                    <input type="checkbox" id="rear-view-camera" value="Rear view camera" v-model="carComfortDetails.comforts"/>
                     <label for="rear-view-camera">Rear view camera</label>
                 </div>       
             </div>
@@ -86,9 +86,22 @@
 export default {
     data(){
         return {
-            testArr: []
+            carComfortDetails: {
+                steeringWheelSide: null,
+                sellingType: null,
+                comforts: [],
+            }
         }
     },
+    computed: {
+        carComfs() {
+            this.$emit("clicked", this.carComfortDetails)
+            return this.carComfortDetails
+        },
+    },
+    watch: {
+        carComfs(){}
+    }
 }
 </script>
 

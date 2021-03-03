@@ -7,25 +7,25 @@
             <div class="left-container">
                 <div class="form-control">
                     <label for="category">Category:</label>
-                    <select id="category" class="select">
+                    <select id="category" class="select" v-model="carMainFeatures.category">
                         <option></option>
-                        <option>Sedan</option>
-                        <option>SUV</option>
-                        <option>Coupe</option>
-                        <option>Hatchback</option>
+                        <option value="Sedan">Sedan</option>
+                        <option value="SUV">SUV</option>
+                        <option value="Coupe">Coupe</option>
+                        <option value="Hatchback">Hatchback</option>
                     </select>
                 </div>
                 <div class="form-control">
                     <label for="model">Model:</label>
-                    <input id = "model" type="text"/>
+                    <input id = "model" type="text" v-model="carMainFeatures.model"/>
                 </div>
                 <div class="form-control">
                     <label for="brand">Brand:</label>
-                    <input id = "Brand" type="text"/>
+                    <input id = "Brand" type="text" v-model="carMainFeatures.brand"/>
                 </div>
                 <div class="form-control">
                     <label for="year">Year:</label>
-                    <select id="year" class="select">
+                    <select id="year" class="select" v-model="carMainFeatures.year">
                         <option class="testOption"></option>
                         <option v-for="index in 30" :key="index">
                             {{ index + 1991}}
@@ -34,15 +34,15 @@
                 </div>
                 <div class="form-group">
                     <label for="milage">Milage:</label>
-                    <input id="milage" type="text"/>
+                    <input id="milage" type="text" v-model="carMainFeatures.milage"/>
                 </div>
                 <div class="form-group">
                     <label for="vin">Vin code:</label>
-                    <input id="vin" type="text"/>
+                    <input id="vin" type="text" v-model="carMainFeatures.vinCode"/>
                 </div>
                 <div class="form-control">
                     <label for="transmission">Transmission:</label>
-                    <select id="transmission" class="select">
+                    <select id="transmission" class="select" v-model="carMainFeatures.transmission">
                         <option></option>
                         <option>Manual</option>
                         <option>Automatic</option>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="form-control">
                     <label for="engine-size" >Engine-size:</label>
-                    <select id="engine-size" class="select">
+                    <select id="engine-size" class="select" v-model="carMainFeatures.engineSize">
                         <option></option>
                         <option v-for="index in 50" :key = index>
                             {{ index / 10. }}
@@ -62,7 +62,7 @@
             <div class="right-container" >
                 <div class="form-control">
                     <label for="cylinder">Cylinder:</label>
-                    <select id="cylinder" class="select">
+                    <select id="cylinder" class="select" v-model="carMainFeatures.cylinder">
                         <option></option>
                         <option v-for="index in 12" :key="index">
                             {{  index  }}
@@ -71,7 +71,7 @@
                 </div>
                 <div class="form-control">
                     <label for="door-amount">Door:</label>
-                    <select id="door-amount" class="select"> 
+                    <select id="door-amount" class="select" v-model="carMainFeatures.door"> 
                         <option></option>
                         <option>4/5</option>
                         <option>2/3</option>
@@ -80,7 +80,7 @@
                 </div>
                 <div class="form-control">
                     <label for="fuel-type">Fuel type:</label>
-                    <select id="fuel-type" class="select">
+                    <select id="fuel-type" class="select" v-model="carMainFeatures.fuelType">
                         <option></option>
                         <option>Petrol</option>
                         <option>Diesel</option>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="form-control">
                     <label for="drive-wheels">Drive wheels:</label>
-                    <select id="drive-wheels" class="select">
+                    <select id="drive-wheels" class="select" v-model="carMainFeatures.driveWheels">
                         <option></option>
                         <option>FWD</option>
                         <option>RWD</option>
@@ -101,19 +101,19 @@
                 </div>
                 <div class="form-control">
                     <label for="color">Color:</label>
-                    <input type="text" id="color"/>
+                    <input type="text" id="color" v-model="carMainFeatures.color"/>
                 </div>
                 <div class="form-control">
                     <label for="interior-color">Interior color:</label>
-                    <input type="text" id="interior-color"/>
+                    <input type="text" id="interior-color" v-model="carMainFeatures.interiorColor"/>
                 </div>
                 <div class="form-control">
                     <label for="interior-material">Interior material:</label>
-                    <input type="text" ud="interior-material"/>
+                    <input type="text" id="interior-material" v-model="carMainFeatures.interiorMaterial"/>
                 </div>
                 <div class="form-control">
                     <label for="airbags">Airbags:</label>
-                    <select id="airbags" class="select">
+                    <select id="airbags" class="select" v-model="carMainFeatures.airbags">
                         <option v-for="index in 12" :key="index">
                             {{ index }}
                         </option>
@@ -126,7 +126,37 @@
 
 <script>
 export default {
-    
+    data() {
+        return {
+            carMainFeatures: {
+                category: null,
+                model: null,
+                brand: null,
+                year: null,
+                milage: null,
+                vinCode: null,
+                transmission: null,
+                engineSize: null,
+                cylinder: null,
+                door: null,
+                fuelType: null,
+                driveWheels: null,
+                interiorColor: null,
+                interiorMaterial: null,
+                airbags: null
+            }
+        }
+    },
+    computed: {
+        carVal(){
+            const tags = [this.carMainFeatures.fuelType, this.carMainFeatures.category]
+            this.$emit('clicked', this.carMainFeatures, this.carMainFeatures.brand, this.carMainFeatures.model, this.carMainFeatures.year, tags);
+            return this.carMainFeatures;
+        }
+    },
+    watch:{
+        carVal(){}
+    }
 }
 </script>
 

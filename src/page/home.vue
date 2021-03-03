@@ -5,11 +5,13 @@
             <main id="main-content">
                 <item-card v-for = "(car,index) in carList" 
                 :key = "index"
+                :brand = car.brand
                 :model = car.model
-                :year = car.year
-                :region = car.region
                 :price = car.price
-                :image = car.images[0]
+                :year = car.year
+                :tags = car.tags
+                :location = car.location
+                :image = car.firstImage
                  ></item-card>
             </main>
         </div>
@@ -36,7 +38,7 @@ export default {
             // handle success
             for(let key in response.data){
                 for(let obj in response.data[key]){
-                    this.carList.push(response.data[key][obj]);
+                    this.carList.push(response.data[key][obj].carCardInfo);
                 }
             }
         })
@@ -52,7 +54,7 @@ export default {
     width: 100%;
 }
 #main-content{
-    border: 2px solid black;
+    /* border: 2px solid black; */
     width: 80%;
     margin: 0 auto;
     padding: 10px;

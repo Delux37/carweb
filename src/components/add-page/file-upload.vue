@@ -28,11 +28,11 @@
                 </div>
                 <div class="description">
                     <p>Say something about your vehicle</p>
-                    <textarea id="description" placeholder="description" rows="10"></textarea>
+                    <textarea id="description" placeholder="description" rows="10" v-model="description"></textarea>
                 </div>
                 <div class="price">
                     <label for="price">Price:</label>
-                    <input type="number" id="price"/>
+                    <input type="number" id="price" v-model="price"/>
                 </div>
             </form>
         </div>
@@ -43,16 +43,13 @@
 export default {
      data(){
         return {    
-            model: '',
-            year: '',
-            region: '',
-            price: '',
-            /*********/
             /*IMAGES SECTION*/
             imageUrl: '',
             image: null,
             images: [],
             /*********/ 
+            description: null,
+            price: null,
         }
     },
     methods: {
@@ -70,6 +67,15 @@ export default {
             fileReader.readAsDataURL(files[0])
             this.image = files[0]
         },
+    },
+    computed: {
+        val(){
+            this.$emit('clicked', this.images, this.price, this.description);
+            return this.images && this.price && this.description
+        },
+    },
+    watch: {
+        val() {}
     }
 }
 </script>

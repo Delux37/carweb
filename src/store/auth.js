@@ -29,7 +29,6 @@ state: {
     auth(context, payload){
       const mode = payload.mode;
       if(mode == 'login'){
-        console.log('login')
         axios({
           method: 'post',
           url: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyArtc_zaruHWFQIzQx7CkATC-caYQoMYUk',
@@ -70,7 +69,6 @@ state: {
             const expiresIn = +responseData.data.expiresIn * 1000
             const expirationDate = new Date().getTime() + expiresIn;
 
-            console.log(responseData.data.idToken, "****", responseData.data.localId, "****", expirationDate)
             localStorage.setItem('token', responseData.data.idToken);
             localStorage.setItem('userId', responseData.data.localId);
             localStorage.setItem('tokenExpiration', expirationDate)
@@ -102,7 +100,6 @@ state: {
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('userId');
       const tokenExpiration = localStorage.getItem('tokenExpiration')
-      console.log("*************", token, userId, tokenExpiration, "*****************")
 
       const expiresIn = +tokenExpiration - new Date().getTime();
 
@@ -124,8 +121,6 @@ state: {
   },
   getters: {
     isAuthenticated(state){
-      console.log(state.token);
-      console.log(!!state.token);
       return !!state.token
     },
     token(state){

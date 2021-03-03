@@ -1,17 +1,17 @@
 <template>
     <div class="item-card">
         <div class="img-container" :style="'background-image: url(' + image + ')'">
-            <img src=""/>
+            
         </div>
         <div class="content-container">
-            <p class="first-title"><span>{{ year }}</span> <span>{{ region }}</span></p>
-            <h2>{{ model }}</h2>
+            <p class="first-title"><span>{{ year }}</span> <span>{{ location }}</span></p>
+            <h2>{{ newModel }}</h2>
             <p class="tags">
                 <span v-for="(tag,index) in tags" :key = "index">
                     {{ tag }}
                 </span>
             </p>
-            <h3>{{ price }}</h3>
+            <h3>{{ convertedPrice }}</h3>
         </div>
         <!-- <img :src="carImage"/> -->
     </div>
@@ -19,25 +19,15 @@
 
 <script>
 export default {
-    props: ['model', 'year', 'region', 'price', 'image' ],
-    data() {
-        return { 
-                    tags: ['gas', 'ass']
-        }
-    },
+    props: ['model', 'brand', 'year', 'location', 'price', 'image', 'tags' ],
     computed: {
-        // carImage() {
-        //     return require( `${this.image}.jpg`); 
-        // }
-
-    },
-    methods: {
-        test(){
-            console.log("IM here")
-            console.log(this.carImage);
+        newModel() {
+            return this.model + ' ' + this.brand 
         },
-    }
-    
+        convertedPrice(){
+            return this.price + '$'
+        }
+    },    
 }
 </script>
 
@@ -84,6 +74,9 @@ h3{
     background-size: 300px 100%;
     background-repeat: no-repeat;
     background-position: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    overflow: hidden;
 }
 .content-container{
     display: flex;

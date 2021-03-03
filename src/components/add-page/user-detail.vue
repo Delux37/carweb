@@ -7,29 +7,53 @@
             <div class="left-container">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name"/>
+                    <input type="text" id="name" v-model="userInfo.name"/>
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone:</label>
-                    <input type="number" id="phone"/>
+                    <input type="number" id="phone" v-model="userInfo.phone"/>
                 </div>
             </div>
             <div class="right-container">
                 <div class="form-group">
                     <label for="location">Location</label>
-                    <input type="text" id="location"/>
+                    <input type="text" id="location" v-model="userInfo.location"/>
                 </div>
                 <div class="form-group">
                     <label for="custom">Customs:</label>
-                    <select id="custom" class="select">
-                        <option>Before custom</option>
-                        <option>After custom</option>
+                    <select id="custom" class="select" v-model="userInfo.custom">
+                        <option value="Before custom">Before custom</option>
+                        <option value="After custom">After custom</option>
                     </select>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            userInfo: {
+                name: null,
+                phone: null,
+                location: null,
+                custom: null,
+            }
+        }
+    },
+    computed: {
+        val(){
+            this.$emit('clicked', this.userInfo, this.userInfo.location)
+            return this.userDetail;
+        }
+    },
+    watch: {
+        val(){}
+    }
+}
+</script>
 
 <style scoped>
     header{
@@ -69,10 +93,4 @@
         margin-bottom: 30px;
     }
 </style>
-
-<script>
-export default {
-    
-}
-</script>
 

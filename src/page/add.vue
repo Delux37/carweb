@@ -1,10 +1,10 @@
 <template>
     <div>
-        <main-features></main-features>
-        <comfort-details></comfort-details>
-        <file-upload></file-upload>
-        <user-detail></user-detail>
-        <base-button mode="submit" id="btn">Submit</base-button>
+        <main-features @clicked="addCarMainFeatures"></main-features>
+        <comfort-details @clicked="addCarComforts"></comfort-details>
+        <file-upload @clicked="addDetail"></file-upload>
+        <user-detail @clicked="addUserDetail"></user-detail>
+        <base-button mode="submit" id="btn" @toggleLogIn="sendPostRequest">Submit</base-button>
     </div>
 </template>
 
@@ -27,53 +27,67 @@ export default {
     },
     data(){
         return {    
-            model: '',
-            year: '',
-            region: '',
-            price: '',
-            /*********/
-            /*IMAGES SECTION*/
-            imageUrl: '',
-            image: null,
-            images: [],
-            /*********/ 
+            carInfo: {
+                // Model, Brand, price, bodyType fuel Type, price, firstImage
+                carMainFeatures: null,
+                carComforts: null,
+                images: [],
+                description: null,
+                price: null,
+                userDetail: null,
+            },
+            carCardInfo: {
+                brand: null,
+                model: null,
+                year: null,
+                tags: [],
+
+                firstImage: null,
+                price: null,
+
+                location: null,
+            }
+
         }
     },
     methods: {
-        filePopUp(){
-            // this.$refs.fileInput.click()
-        },
-        onFilePicked(event){
-            const files = event.target.files
-            // let filename = files[0].filename
-            const fileReader = new FileReader()
-            fileReader.addEventListener('load', () => {
-                this.imageUrl =  fileReader.result
-                this.images.push(this.imageUrl);
-            })
-            fileReader.readAsDataURL(files[0])
-            this.image = files[0]
+        testInfo(){
+            console.log(this.carCardInfo);
         },
         sendPostRequest() {
             const token = this.$store.getters.token;
             const userId = this.$store.getters.userId
-            console.log(token)
+
             axios({
             method: 'post',
             url: `https://carweb-797f8-default-rtdb.firebaseio.com/carList/${userId}.json?auth=` + token,
             data: {
-                model: this.model,
-                year: this.year,
-                region: this.region,
-                price: this.price,
-                images: this.images
+                carDetail: this.carInfo,
+                carCardInfo: this.carCardInfo
             }
             });
-            this.model = '',
-            this.year = '',
-            this.region = '',
-            this.price = '',
-            this.images = []
+            this.$router.replace('/');
+        },
+        addCarMainFeatures(val, brand, model, year, tags){
+            this.carCardInfo.brand = brand;
+            this.carCardInfo.model = model;
+            this.carCardInfo.year = year;
+            this.carCardInfo.tags = tags;
+            this.carInfo.carMAinFeatures = val;
+        },
+        addCarComforts(val){
+            this.carInfo.carComforts = val;
+        },
+        addDetail(images,price,desc){
+            this.carInfo.images = images;
+            this.carInfo.description = desc;
+            this.carInfo.price = price;
+            this.carCardInfo.price = price;
+            this.carCardInfo.firstImage = images[0];
+        },
+        addUserDetail(val, location){
+            this.carInfo.userDetail = val;
+            this.carCardInfo.location = location
         }
     }
    
