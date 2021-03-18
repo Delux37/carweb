@@ -2,17 +2,23 @@
     <div id="parent">
         <!-- <nav-bar></nav-bar> -->
         <div id="container">
-            <main id="main-content">
-                <item-card v-for = "(car,index) in carList" 
+            <main id="main-content" v-if="!isLoading">
+                <item-card v-for = "(car,index) in carList"
                 :key = "index"
-                :brand = car.brand
-                :model = car.model
-                :price = car.price
-                :year = car.year
-                :tags = car.tags
-                :location = car.location
-                :image = car.firstImage
+                :brand = car.carList.brand
+                :model = car.carList.model
+                :price = car.carList.price
+                :year = car.carList.year
+                :tags = car.carList.tags
+                :location = car.carList.location
+                :image = car.carList.firstImage
+                :user = car.user
+                :carId = car.carId
+                :id = car.carList.id
                  ></item-card>
+            </main>
+            <main id="main-content" v-else>
+                <cardSkeletonLoader v-for="num in iteration" :key="num"/>
             </main>
         </div>
     </div>    
@@ -21,26 +27,43 @@
 <script>
 import axios from 'axios'
 import itemCard from '../UI/item-card.vue'
+import cardSkeletonLoader from '../UI/cardSkeletonLoader.vue'
 // import navBar from '../components/nav-bar.vue';
 export default {
     components: {
         // navBar,
-        itemCard
+        itemCard,
+        cardSkeletonLoader
     },
     data(){
         return {
             carList: [],
+            isLoading: false,
+            iteration: null,
         }
     },
-    mounted(){
-    axios.get('https://carweb-797f8-default-rtdb.firebaseio.com/carList.json')
+    created(){
+    axios.get('https://carweb-797f8-default-rtdb.firebaseio.com/test.json')
         .then((response ) => {
             // handle success
-            for(let key in response.data){
-                for(let obj in response.data[key]){
-                    this.carList.push(response.data[key][obj].carCardInfo);
+        this.iteration = response.data.Amount 
+    })
+    },
+    mounted(){
+    this.isLoading = true
+    axios.get('https://carweb-797f8-default-rtdb.firebaseio.com/carList.json')
+        .then((response ) => {
+            for(let user in response.data){
+                for(let carId in response.data[user]){
+                    this.carList.push({
+                        user,
+                        carId,
+                        carList: response.data[user][carId].carCardInfo
+                    })
                 }
             }
+        }).then(() => {
+            this.isLoading = false
         })
     }
 }

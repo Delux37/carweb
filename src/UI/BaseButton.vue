@@ -3,12 +3,13 @@
         <button :class="mode" @click="clicked" v-if="!link">
             <span v-if="mode==='default'"><i class="fas fa-plus-circle plus"></i></span>
             <span v-else-if="mode==='flat'"><i class="fas fa-user-alt user"></i></span>
-             <span v-else-if="mode==='submit'"><i class="far fa-paper-plane"></i></span>
+            <span v-else-if="mode==='submit'"><i class="far fa-paper-plane"></i></span>
             <slot></slot>
         </button>
         <router-link v-else :to = "to" :class="mode">
             <span v-if="mode==='default'"><i class="fas fa-plus-circle plus"></i></span>
             <span v-else-if="mode==='flat'"><i class="fas fa-user-alt user"></i></span>
+            <span v-else-if="mode==='saved'"><i class="fas fa-save save"></i></span>
             <slot></slot>
         </router-link>
     </div>
@@ -63,7 +64,8 @@ a{
     margin-right: 7px;
 }
 
-.plus{
+.plus,
+.save{
     color: orange;
     margin-right: 3px;
 }
@@ -75,6 +77,10 @@ a{
     background-color: #d4a44a;
     color: white;
     border: 1px solid #fdcb6e;
+}
+.saved{
+    background-color: white;
+    border: 1px solid rgb(192, 192, 192);
 }
 
 .submit{

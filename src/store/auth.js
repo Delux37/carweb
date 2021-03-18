@@ -19,11 +19,11 @@ state: {
     // logIn(state){
     //   state.isLoggedIn = !state.isLoggedIn
     // },
-    logout(state){
-      state.token = null;
-      state.userId = null;
-      state.tokenExpiration = null;
-    }
+    // logout(state,payload){
+    //   state.token = payload.token;
+    //   state.userId = payload.userId;
+    //   state.tokenExpiration = null;
+    // }
   },
   actions: {
     auth(context, payload){
@@ -84,18 +84,18 @@ state: {
       });
       }
     },  
-    // logout(context){
-    //   localStorage.removeItem('token');
-    //   localStorage.removeItem('userId');
-    //   localStorage.removeItem('tokenExpiration');
+    logout(context){
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('tokenExpiration');
 
-    //   clearTimeout(timer);
+      // clearTimeout(timer);
 
-    //   context.commit('setUser', {
-    //     token: null,
-    //     userId: null,
-    //   })
-    // },
+      context.commit('setUser', {
+        token: null,
+        userId: null,
+      })
+    },
     tryLogin(context){
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('userId');

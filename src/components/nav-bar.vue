@@ -5,6 +5,10 @@
         </div>
         <nav>
             <ul id="main-nav">
+                <li class="saved_container">
+                    <base-button link=true to="#" mode="saved">Saved</base-button>
+                    <span id="saved">0</span>  
+                </li>
                 <li><base-button link=true :to="checkAuth" mode="default">Add</base-button></li>
                 <li v-if="!isAuthenitcated">
                     <base-button mode="flat" link=true to="/authentication">Log in</base-button>
@@ -53,6 +57,19 @@ export default {
 
 
 <style scoped>
+.saved_container{
+    position: relative;
+}
+#saved{
+    position: absolute;
+    right: 10px;
+    top: -10px;
+    font-size: 10px;
+    background-color: rgb(0, 162, 255);
+    color: white;
+    border-radius: 50%;
+    padding: 2px;
+}
 #menu:hover #drop-down{
     display: block;
 }
@@ -67,6 +84,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     box-shadow: 1px 1px 10px 2px rgba(77, 77, 77, 0.671);
+    z-index: 10;
 }
 
 #logo{
