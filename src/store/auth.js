@@ -19,11 +19,11 @@ state: {
     // logIn(state){
     //   state.isLoggedIn = !state.isLoggedIn
     // },
-    logout(state){
-      state.token = null;
-      state.userId = null;
-      state.tokenExpiration = null;
-    }
+    // logout(state,payload){
+    //   state.token = payload.token;
+    //   state.userId = payload.userId;
+    //   state.tokenExpiration = null;
+    // }
   },
   actions: {
     auth(context, payload){
@@ -33,12 +33,17 @@ state: {
           method: 'post',
           url: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyArtc_zaruHWFQIzQx7CkATC-caYQoMYUk',
           data: {
-            
             email: payload.email,
             password: payload.password,
             returnSecureToken: true,
           }
-          }).then((responseData) => {
+          })
+          // .catch((error) => {
+          //   console.log(error)
+          // })
+          .then((responseData) => {
+            payload.router.replace('/')
+            // console.log('then')/
             const expiresIn = +responseData.data.expiresIn * 1000
             const expirationDate = new Date().getTime() + expiresIn;
 
@@ -54,8 +59,12 @@ state: {
               token: responseData.data.idToken,
               userId: responseData.data.localId,
               tokenExpiration: responseData.data.expiresIn
-        });
-      });
+        })
+      }).then(() => {
+        window.location.reload()
+      }).catch((error) => {
+        console.log(error)
+      })
       }else{
         axios({
           method: 'post',
@@ -84,18 +93,18 @@ state: {
       });
       }
     },  
-    // logout(context){
-    //   localStorage.removeItem('token');
-    //   localStorage.removeItem('userId');
-    //   localStorage.removeItem('tokenExpiration');
+    logout(context){
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('tokenExpiration');
 
-    //   clearTimeout(timer);
+      // clearTimeout(timer);
 
-    //   context.commit('setUser', {
-    //     token: null,
-    //     userId: null,
-    //   })
-    // },
+      context.commit('setUser', {
+        token: null,
+        userId: null,
+      })
+    },
     tryLogin(context){
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('userId');

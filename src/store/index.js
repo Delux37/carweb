@@ -1,11 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import auth from './auth.js'
+import fetchDetail from './fetchDetail.js'
+import zoomImage from './zoomImage.js'
+import cart from './cart.js'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    auth
+    auth,
+    fetchDetail,
+    zoomImage,
+    cart
   },
 })

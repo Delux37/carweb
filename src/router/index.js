@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../page/home.vue'
 import add from '../page/add.vue'
 import auth from '../page/authentication.vue'
+import carDetail from '../page/carDetail.vue'
 import NotFound from '../UI/notFound.vue'
 // import store from '../store/index.js'
 
@@ -17,6 +18,9 @@ const routes = [
 },
 {
   path: '/authentication', component: auth, meta: { requiresUnAuth: true}
+},
+{
+  path: '/cardetail/:userId/:carId', component: carDetail, name: 'carDetail'
 },
 {
   path: '/:notFound(.*)', component: NotFound 

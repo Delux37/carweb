@@ -5,6 +5,10 @@
         </div>
         <nav>
             <ul id="main-nav">
+                <li class="saved_container" v-if="isAuthenitcated">
+                    <base-button link=true to="#" mode="saved">Saved</base-button>
+                    <span id="saved">{{ savedLength }}</span>  
+                </li>
                 <li><base-button link=true :to="checkAuth" mode="default">Add</base-button></li>
                 <li v-if="!isAuthenitcated">
                     <base-button mode="flat" link=true to="/authentication">Log in</base-button>
@@ -27,9 +31,15 @@
 
 <script>
 import baseButton from '../UI/BaseButton.vue';
+import axios from 'axios'
 export default {
     components:{
         baseButton
+    },
+    data() {
+        return {
+            savedLength: null
+      }
     },
     computed: {
         checkAuth(){
@@ -47,12 +57,35 @@ export default {
         logOut(){
             this.$store.dispatch('logout')
         }
+    },
+    mounted(){
+        console.log(this.$store.getters.userId)
+        axios.get(`https://carweb-797f8-default-rtdb.firebaseio.com/savedCars/${this.$store.getters.userId}.json?auth=` + this.$store.getters.token)
+        .then((response) => {
+           this.savedLength =  Object.keys(response.data).length
+        }).catch(() => {
+            this.savedLength = 0;
+        });
     }
+
 }
 </script>
 
 
 <style scoped>
+.saved_container{
+    position: relative;
+}
+#saved{
+    position: absolute;
+    right: 10px;
+    top: -10px;
+    font-size: 10px;
+    background-color: rgb(0, 162, 255);
+    color: white;
+    border-radius: 50%;
+    padding: 2px;
+}
 #menu:hover #drop-down{
     display: block;
 }
@@ -67,6 +100,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     box-shadow: 1px 1px 10px 2px rgba(77, 77, 77, 0.671);
+    z-index: 10;
 }
 
 #logo{

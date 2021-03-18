@@ -1,5 +1,5 @@
 <template>
-    <div class="item-card">
+    <div class="item-card" @click="selectCar(user,carId)" >
         <div class="img-container" :style="'background-image: url(' + image + ')'">
             
         </div>
@@ -19,7 +19,7 @@
 
 <script>
 export default {
-    props: ['model', 'brand', 'year', 'location', 'price', 'image', 'tags' ],
+    props: ['model', 'brand', 'year', 'location', 'price', 'image', 'tags', 'user', 'carId'],
     computed: {
         newModel() {
             return this.model + ' ' + this.brand 
@@ -27,7 +27,12 @@ export default {
         convertedPrice(){
             return this.price + '$'
         }
-    },    
+    }, 
+    methods:{
+        selectCar(user,carId){
+            this.$router.push({ name: 'carDetail', params: { userId:user, carId: carId } })
+        }
+    }
 }
 </script>
 
