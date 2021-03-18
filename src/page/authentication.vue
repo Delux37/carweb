@@ -45,7 +45,8 @@ export default{
                     this.$store.dispatch('auth', {
                         email: this.email,
                         password: this.password,
-                        mode: 'login'
+                        mode: 'login',
+                        router: this.$router
                     });                   
                 }else{
                     this.$store.dispatch('auth', {
@@ -54,9 +55,10 @@ export default{
                         mode: 'signup'
                     });
                 }
-                this.$router.replace('/')
+                // this.$router.replace('/')
             }catch(err){
                 this.error = err.message || "Failed to authenticate, try later."
+
             }
         },
         toggleLogIn(){

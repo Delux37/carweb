@@ -5,9 +5,9 @@
         </div>
         <nav>
             <ul id="main-nav">
-                <li class="saved_container">
+                <li class="saved_container" v-if="isAuthenitcated">
                     <base-button link=true to="#" mode="saved">Saved</base-button>
-                    <span id="saved">0</span>  
+                    <span id="saved">{{ savedLength }}</span>  
                 </li>
                 <li><base-button link=true :to="checkAuth" mode="default">Add</base-button></li>
                 <li v-if="!isAuthenitcated">
@@ -31,9 +31,15 @@
 
 <script>
 import baseButton from '../UI/BaseButton.vue';
+import axios from 'axios'
 export default {
     components:{
         baseButton
+    },
+    data() {
+        return {
+            savedLength: null
+      }
     },
     computed: {
         checkAuth(){
@@ -51,7 +57,17 @@ export default {
         logOut(){
             this.$store.dispatch('logout')
         }
+    },
+    mounted(){
+        console.log(this.$store.getters.userId)
+        axios.get(`https://carweb-797f8-default-rtdb.firebaseio.com/savedCars/${this.$store.getters.userId}.json?auth=` + this.$store.getters.token)
+        .then((response) => {
+           this.savedLength =  Object.keys(response.data).length
+        }).catch(() => {
+            this.savedLength = 0;
+        });
     }
+
 }
 </script>
 

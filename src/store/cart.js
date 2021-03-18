@@ -7,20 +7,46 @@ const store =  {
   },
   actions: {
     cart(context, payload){
-        axios.get(`https://carweb-797f8-default-rtdb.firebaseio.com/saved/${payload.userId}.json?auth=` + payload.token)
+        axios.get(`https://carweb-797f8-default-rtdb.firebaseio.com/savedCars.json?auth=` + payload.token)
         .then((response) => {
-            console.log(response)
-        
+          const data = response.data
+          const keys = Object.keys(data)
+
+          if(keys.indexOf(payload.userId) === -1){ 
+            axios({
+              method: 'post',
+              url: `https://carweb-797f8-default-rtdb.firebaseio.com/savedCars/${payload.userId}.json?auth=` + payload.token,
+              data: {
+                  carId: payload.carId
+          }
+          
+          }).then(() => {
+            window.location.reload()
+          });
+          
+          }else{
+            let temp = null;
+            for(let i in data[payload.userId]){
+              if(data[payload.userId][i]['carId'] === payload.carId){
+                temp = i;
+              }
+            }
+            if(temp !== null){
+              return;
+            }else{
+                axios({
+                  method: 'post',
+                  url: `https://carweb-797f8-default-rtdb.firebaseio.com/savedCars/${payload.userId}.json?auth=` + payload.token,
+                  data: {
+                      carId: payload.carId
+                  }
+              }).then(() => {
+                window.location.reload()
+              });
+            }
+          }
         }).catch(() => {
             console.log("error")
-
-            axios({
-                method: 'post',
-                url: `https://carweb-797f8-default-rtdb.firebaseio.com/saved/${payload.userId}.json?auth=` + payload.token,
-                data: {
-                    carId: payload.carId
-                }
-            });
         })
         // .then(() => {
 

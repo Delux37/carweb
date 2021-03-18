@@ -12,7 +12,7 @@ export default {
     computed: {
         data() {
             return {
-                userId: this.userId,
+                userId: this.$store.getters.userId,
                 carId: this.carId,
                 token: this.$store.getters.token
             }
@@ -21,6 +21,7 @@ export default {
     methods: {
         addCar() {
             this.$store.dispatch('cart', this.data)
+            
         }
     }
 }
