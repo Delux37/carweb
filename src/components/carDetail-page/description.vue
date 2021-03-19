@@ -1,5 +1,8 @@
 <template>
     <div>
+        <baseInfo v-if="isNotified" v-scroll-lock="false" @clickedClose="clickedClose">
+            <!-- <h3 slot="body">Added to car search succesfully !</h3> -->
+        </baseInfo>
         <p id="type">{{ sellingType }} | <button id="btn" @click="addCar">Add to saved cars</button></p>
         <hr/>
         <p id="desc">{{ description }}</p>
@@ -7,21 +10,34 @@
 </template>
 
 <script>
+import BaseInfo from '../../UI/BaseInfo.vue'
+
 export default {
+    components: {
+        BaseInfo
+    },
     props:['description', 'sellingType', 'carId', 'userId'],
-    computed: {
-        data() {
-            return {
-                userId: this.$store.getters.userId,
+    data() {
+        return {
+            msg: "Added to search succesfully ! :))",
+            data: {
                 carId: this.carId,
+                userId: this.userId,
                 token: this.$store.getters.token
             }
+        }
+    },
+    computed: {
+        isNotified(){
+            return this.$store.getters.isNotified;
         }
     },
     methods: {
         addCar() {
             this.$store.dispatch('cart', this.data)
-            
+        },
+        clickedClose(){
+            this.$store.dispatch('toggleModal', false)   
         }
     }
 }

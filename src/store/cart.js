@@ -1,11 +1,25 @@
 import axios from 'axios'
 const store =  { 
+  state: {
+    isNotified: false,
+    notification: ''
+  },
   mutations: {
-    // setSaved(state,payload){
-
-    // }
+    toggleModal(state, payload){
+      state.isNotified = payload
+    },
+    addNotification(state,payload){
+      state.notification = payload
+    }
   },
   actions: {
+    toggleModal(context, payload){
+      context.commit('toggleModal', payload)
+      if(payload=== false){
+        window.location.reload();
+      }
+    },
+
     cart(context, payload){
         axios.get(`https://carweb-797f8-default-rtdb.firebaseio.com/savedCars.json?auth=` + payload.token)
         .then((response) => {
@@ -13,6 +27,7 @@ const store =  {
           const keys = Object.keys(data)
 
           if(keys.indexOf(payload.userId) === -1){ 
+
             axios({
               method: 'post',
               url: `https://carweb-797f8-default-rtdb.firebaseio.com/savedCars/${payload.userId}.json?auth=` + payload.token,
@@ -21,9 +36,10 @@ const store =  {
           }
           
           }).then(() => {
-            window.location.reload()
-          });
-          
+            // window.location.reload()
+            context.commit('addNotification', 'Added to saved cars succesfully!')
+            context.commit('toggleModal', true)
+          })          
           }else{
             let temp = null;
             for(let i in data[payload.userId]){
@@ -32,6 +48,9 @@ const store =  {
               }
             }
             if(temp !== null){
+              context.commit('addNotification', 'Oops you\'ve already have this car in saved cars, click below to view it.')
+              context.commit('toggleModal', true)
+
               return;
             }else{
                 axios({
@@ -41,8 +60,9 @@ const store =  {
                       carId: payload.carId
                   }
               }).then(() => {
-                window.location.reload()
-              });
+                context.commit('addNotification', 'Added to saved cars succesfully!')
+                context.commit('toggleModal', true)
+              })
             }
           }
         }).catch(() => {
@@ -81,6 +101,15 @@ const store =  {
         // })
     },  
   },
+
+  getters: {
+    isNotified(state){
+      return state.isNotified;
+    },
+    notification(state){
+      return state.notification
+    }
+  }
 }
 
 

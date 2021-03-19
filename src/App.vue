@@ -2,6 +2,7 @@
 <template>
 <div>
   <nav-bar></nav-bar>
+  <saved-cars-modal  v-if="showSavedCars" />
   <transition name="route" mode="out-in">
     <router-view>
     </router-view>
@@ -11,9 +12,17 @@
 
 <script>
 import navBar from './components/nav-bar.vue'
+import savedCarsModal from './UI/BaseModals/saved-cars-modal.vue'
+
 export default {
   components:{
     navBar,
+    savedCarsModal
+  },
+  computed: {
+    showSavedCars(){
+      return this.$store.getters.isShown
+    }
   },
   created(){
     this.$store.dispatch('tryLogin')
@@ -33,6 +42,7 @@ body{
   font-size: 20px;
   letter-spacing: 1px;
   background-color: #dfe6e9;
+  /* overflow:hidden; */
 }
 
 

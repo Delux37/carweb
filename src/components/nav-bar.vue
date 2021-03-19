@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import baseButton from '../UI/BaseButton.vue';
+import baseButton from '../UI/BaseButton.vue'
 import axios from 'axios'
 export default {
     components:{
