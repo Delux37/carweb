@@ -22,7 +22,8 @@ export default {
             msg: "Added to search succesfully ! :))",
             data: {
                 carId: this.carId,
-                userId: this.userId,
+                carOwnerUserId: this.userId,
+                userId: this.$store.getters.userId,
                 token: this.$store.getters.token
             }
         }

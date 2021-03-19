@@ -6,7 +6,7 @@
         <nav>
             <ul id="main-nav">
                 <li class="saved_container" v-if="isAuthenitcated">
-                    <base-button link=true to="#" mode="saved">Saved</base-button>
+                    <base-button @toggleLogIn="toggle" mode="saved" >Saved</base-button>
                     <span id="saved">{{ savedLength }}</span>  
                 </li>
                 <li><base-button link=true :to="checkAuth" mode="default">Add</base-button></li>
@@ -56,12 +56,16 @@ export default {
     methods: {
         logOut(){
             this.$store.dispatch('logout')
+        },
+        toggle(){
+            this.$store.dispatch('toggleShown')
         }
     },
     mounted(){
         console.log(this.$store.getters.userId)
         axios.get(`https://carweb-797f8-default-rtdb.firebaseio.com/savedCars/${this.$store.getters.userId}.json?auth=` + this.$store.getters.token)
         .then((response) => {
+           this.$store.dispatch('addSavedCarsList', response.data)
            this.savedLength =  Object.keys(response.data).length
         }).catch(() => {
             this.savedLength = 0;

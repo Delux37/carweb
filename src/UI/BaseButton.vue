@@ -4,12 +4,12 @@
             <span v-if="mode==='default'"><i class="fas fa-plus-circle plus"></i></span>
             <span v-else-if="mode==='flat'"><i class="fas fa-user-alt user"></i></span>
             <span v-else-if="mode==='submit'"><i class="far fa-paper-plane"></i></span>
+            <span v-else-if="mode==='saved'"><i class="fas fa-save save"></i></span>
             <slot></slot>
         </button>
         <router-link v-else :to = "to" :class="mode">
             <span v-if="mode==='default'"><i class="fas fa-plus-circle plus"></i></span>
             <span v-else-if="mode==='flat'"><i class="fas fa-user-alt user"></i></span>
-            <span v-else-if="mode==='saved'"><i class="fas fa-save save"></i></span>
             <slot></slot>
         </router-link>
     </div>

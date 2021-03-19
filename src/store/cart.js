@@ -32,7 +32,8 @@ const store =  {
               method: 'post',
               url: `https://carweb-797f8-default-rtdb.firebaseio.com/savedCars/${payload.userId}.json?auth=` + payload.token,
               data: {
-                  carId: payload.carId
+                  carId: payload.carId,
+                  carOwnerUserId: payload.carOwnerUserId
           }
           
           }).then(() => {
@@ -57,7 +58,8 @@ const store =  {
                   method: 'post',
                   url: `https://carweb-797f8-default-rtdb.firebaseio.com/savedCars/${payload.userId}.json?auth=` + payload.token,
                   data: {
-                      carId: payload.carId
+                      carId: payload.carId,
+                      carOwnerUserId: payload.carOwnerUserId
                   }
               }).then(() => {
                 context.commit('addNotification', 'Added to saved cars succesfully!')
