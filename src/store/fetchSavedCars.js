@@ -4,7 +4,8 @@ const store = {
     state: {
         isDisplayed: false,
         savedCarsList: null,
-        savedCars: []
+        savedCars: [],
+        isLoading: true
     },
     mutations: {
         pushSavedCars(state, payload){
@@ -18,6 +19,9 @@ const store = {
         },
         clearCarList(state){
             state.savedCars = []
+        },
+        toggleLoading(state,payload){
+            state.isLoading = payload;
         }
     },
     actions: {
@@ -47,6 +51,9 @@ const store = {
         clearCarList(context){
             context.commit('clearCarList')
         },
+        toggleLoading(context, payload){
+            context.commit('toggleLoading', payload)
+        }
     },
     getters: {
         isShown(state){
@@ -57,6 +64,9 @@ const store = {
         },
         carList(state){
             return state.savedCars
+        },
+        isLoading(state){
+            return state.isLoading
         }
     }
 }

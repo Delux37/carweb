@@ -9,13 +9,17 @@
                 <i class="fas fa-times" @click="close"></i>
               </div>
 
-              <div class="modal-body">
+              <div class="modal-body" v-if="!isLoading">
                 <item-card v-for="(car,index) in carList" :key="index"
                 :image = car.image
                 :brand = car.brand
                 :location = car.location
                 :price = car.price
                 />
+              </div>
+              <div class="loader" v-else>
+                
+                <loading-spinner id="loading-spinner" />
               </div>
 
 
@@ -31,17 +35,26 @@
 
 <script>
 import itemCard from './item-card.vue'
+import loadingSpinner from '../loading/loading-spinner.vue'
 // brand image location price
 export default{
   components: {
-    itemCard
+    itemCard,
+    loadingSpinner
   },
   mounted(){
+    this.$store.dispatch('toggleLoading', true)
     this.$store.dispatch('fetchSavedCars', this.$store.getters.savedCarsList);
   },
   computed:{
     carList(){
       return this.$store.getters.carList
+    },
+    isLoading(){
+      return this.$store.getters.isLoading
+    },
+    currentLength(){
+      return this.$store.getters.savedCarsList
     }
   },
   methods: {
@@ -49,11 +62,24 @@ export default{
       this.$store.dispatch('toggleShown');
       this.$store.dispatch('clearCarList');
     }
+  },
+  watch:{
+    carList(){
+      if(Object.keys(this.carList).length === Object.keys(this.currentLength).length){
+        this.$store.dispatch('toggleLoading', false)
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
+.loader{
+  height: 100%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
 .modal-mask {
   position: fixed;
   z-index: 100;

@@ -62,7 +62,6 @@ export default {
         }
     },
     mounted(){
-        console.log(this.$store.getters.userId)
         axios.get(`https://carweb-797f8-default-rtdb.firebaseio.com/savedCars/${this.$store.getters.userId}.json?auth=` + this.$store.getters.token)
         .then((response) => {
            this.$store.dispatch('addSavedCarsList', response.data)

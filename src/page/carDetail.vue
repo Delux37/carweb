@@ -46,6 +46,12 @@ mounted(){
         carId : this.$route.params.carId
     })
 },
+watch: {
+    isZoomed() {
+       window.scrollTo(0,0);
+      document.querySelector('body').style.overflow = this.isZoomed ? 'hidden' : null;
+    }
+  }
 }
 </script>
 
