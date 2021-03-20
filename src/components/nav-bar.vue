@@ -1,13 +1,12 @@
 <template>
     <div id="nav">
-        <div id="logo">
-            <h1>carWebs</h1>
+        <div id="logo-container" @click="goHomePage">
+            <img id="logo" src="../img/carWeb.png" />
         </div>
         <nav>
             <ul id="main-nav">
                 <li class="saved_container" v-if="isAuthenitcated">
-                    <base-button @toggleLogIn="toggle" mode="saved" >Saved</base-button>
-                    <span id="saved">{{ savedLength }}</span>  
+                    <savedCars />
                 </li>
                 <li><base-button link=true :to="checkAuth" mode="default">Add</base-button></li>
                 <li v-if="!isAuthenitcated">
@@ -31,10 +30,11 @@
 
 <script>
 import baseButton from '../UI/BaseModals/BaseButton.vue'
-import axios from 'axios'
+import savedCars from './nav-bar/saved-cars.vue'
 export default {
     components:{
-        baseButton
+        baseButton,
+        savedCars
     },
     data() {
         return {
@@ -57,20 +57,10 @@ export default {
         logOut(){
             this.$store.dispatch('logout')
         },
-        toggle(){
-            this.$store.dispatch('toggleShown')
-        }
+        goHomePage(){
+            this.$router.replace('/')
+        },
     },
-    mounted(){
-        axios.get(`https://carweb-797f8-default-rtdb.firebaseio.com/savedCars/${this.$store.getters.userId}.json?auth=` + this.$store.getters.token)
-        .then((response) => {
-           this.$store.dispatch('addSavedCarsList', response.data)
-           this.savedLength =  Object.keys(response.data).length
-        }).catch(() => {
-            this.savedLength = 0;
-        });
-    }
-
 }
 </script>
 
@@ -78,16 +68,6 @@ export default {
 <style scoped>
 .saved_container{
     position: relative;
-}
-#saved{
-    position: absolute;
-    right: 10px;
-    top: -10px;
-    font-size: 10px;
-    background-color: rgb(0, 162, 255);
-    color: white;
-    border-radius: 50%;
-    padding: 2px;
 }
 #menu:hover #drop-down{
     display: block;
@@ -106,19 +86,27 @@ export default {
     z-index: 10;
 }
 
-#logo{
-    padding: 0 5px;
+#logo-container{
     height: 70%;
     border-radius: 25px;
-    background-color: #dfe6e9;
     margin-left: 15px;
+    background-color: rgb(231, 231, 231);
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    box-shadow: 5px 5px 5px 2px rgba(78, 78, 78, 0.438)
+}
+#logo-container:hover{
+    cursor: pointer;
+    background-color: rgb(184, 184, 184)
 }
 
-h1{
-    /* padding : 10px; */
-    color: #74b9ff;
+#logo{
+    width: auto;
     height: 100%;
+    margin: 0 auto;
 }
+
 
 #main-nav{
     display: flex;

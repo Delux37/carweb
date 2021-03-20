@@ -22,6 +22,10 @@ const store = {
         },
         toggleLoading(state,payload){
             state.isLoading = payload;
+        },
+        addNewList(state,payload){
+            state.savedCars = payload.newSavedCars
+            state.savedCarsList = payload.newSavedCarsList
         }
     },
     actions: {
@@ -35,7 +39,9 @@ const store = {
                         image: response.data['firstImage'],
                         brand: response.data['brand']+' ' + response.data['model'],
                         location: response.data['location'],
-                        price: response.data['price']
+                        price: response.data['price'],
+                        userId: payload[key]['carOwnerUserId'],
+                        carId: payload[key]['carId']
                     }
                     context.commit('addSavedCars', tempData);
                 })
@@ -53,6 +59,18 @@ const store = {
         },
         toggleLoading(context, payload){
             context.commit('toggleLoading', payload)
+        },
+        deleteFromSavedCarsList(context,payload){
+            // context.commit('deleteFromSavedCarsList', payload);
+            axios.delete(`https://carweb-797f8-default-rtdb.firebaseio.com/savedCars/${payload.userId}/${payload.id}.json?auth=` + payload.token).then(() => {
+                //   console.log(response)
+              }).catch((error) => {
+                  console.log(error)
+            })
+            context.commit('addNewList', {
+                newSavedCarsList: payload.newSavedCarsList,
+                newSavedCars: payload.newSavedCars
+            })
         }
     },
     getters: {

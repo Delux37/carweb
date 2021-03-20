@@ -15,13 +15,14 @@
                 :brand = car.brand
                 :location = car.location
                 :price = car.price
+                :userId = car.userId
+                :carId = car.carId
+                @removeCarFromList = removeCarFromList
                 />
               </div>
               <div class="loader" v-else>
                 <loading-spinner id="loading-spinner" />
               </div>
-
-
               <!-- <div class="modal-footer">
                   
               </div> -->
@@ -60,6 +61,31 @@ export default{
     close(){
       this.$store.dispatch('toggleShown');
       this.$store.dispatch('clearCarList');
+    },
+    removeCarFromList(carId){
+      let id = null
+      this.$store.dispatch('toggleLoading', true);
+      for(let obj in this.currentLength){
+        if(this.currentLength[obj].carId === carId){
+            id = obj
+            delete this.currentLength[obj]
+        }
+      }
+      
+      for(let obj in this.carList){
+        if(this.carList[obj].carId === carId){
+          this.carList.splice(obj, 1);
+        }
+      }
+      
+
+      this.$store.dispatch('deleteFromSavedCarsList', {
+        newSavedCarsList: this.currentLength,
+        newSavedCars: this.carList,
+        userId: this.$store.getters.userId,
+        id,
+        token: this.$store.getters.token
+      })
     }
   },
   watch:{
@@ -67,6 +93,9 @@ export default{
       if(Object.keys(this.carList).length === Object.keys(this.currentLength).length){
         this.$store.dispatch('toggleLoading', false)
       }
+    },
+    currentLength(){
+      
     }
   }
 }

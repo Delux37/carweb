@@ -1,11 +1,11 @@
 <template>
     <div>
-        <image-carousel :images = carDetail.images v-if="!isZoomed"></image-carousel>
-        <image-carousel-zoomed :images = carDetail.images v-else></image-carousel-zoomed>
+        <image-carousel :images = carDetail.images v-if="!isZoomed && !!carDetail"></image-carousel>
+        <image-carousel-zoomed  :images = carDetail.images v-else></image-carousel-zoomed>
         <general-detail :info = carDetail ></general-detail>
-        <description v-if="carDetail" :carId = this.$route.params.carId :userId = this.$route.params.userId :description="carDetail.description" :sellingType="carDetail.carComforts.sellingType"/>
+        <description v-if="!!carDetail" :carId = this.$route.params.carId :userId = this.$route.params.userId :description="carDetail.description" :sellingType="carDetail.carComforts.sellingType"/>
         <div id="secondSection">
-            <comforts v-if="carDetail" :comforts = carDetail.carComforts.comforts></comforts>
+            <comforts v-if="!!carDetail" :comforts = carDetail.carComforts.comforts></comforts>
             <carMainFeatures v-if="carDetail" :steeringWheelSide="carDetail.carComforts.steeringWheelSide" :mainFeatures = carDetail.carMAinFeatures />
         </div>
 

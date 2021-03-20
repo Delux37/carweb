@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="wrapper" @click="test">
+        <div class="wrapper" @click="toggleAdditional">
             <div class="image">
                 <img :src="image"/>
             </div>
@@ -15,10 +15,9 @@
             </div>
         </div>
         <div class="hide" :class="{show: isActive}">
-            <button class="view"><i class="fa fa-trash" aria-hidden="true"></i>
+            <button class="view" @click="viewCar"><i class="fa fa-trash" aria-hidden="true"></i>
  View car</button>
-            <button class="delete"><i class="fas fa-eye"></i>
-
+            <button class="delete" @click="deleteCarFromList"><i class="fas fa-eye"></i>
 Delete</button>
         </div>
     </div>
@@ -26,15 +25,23 @@ Delete</button>
 
 <script>
 export default {
-    props: ['price', 'location', 'brand', 'image'],
+    props: ['price', 'location', 'brand', 'image', 'carId', 'userId'],
+    emits: ['removeCarFromList'],
     data() {
         return {
             isActive: false
         }
     },
     methods:{
-        test(){
-            this.isActive=true
+        toggleAdditional(){
+            this.isActive= !this.isActive
+        },
+        viewCar(){
+            this.$store.dispatch('toggleShown')
+            this.$router.replace(`/carDetail/${this.userId}/${this.carId}`)
+        },
+        deleteCarFromList(){
+            this.$emit('removeCarFromList', this.carId)
         }
     }
     

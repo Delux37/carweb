@@ -9,7 +9,6 @@ const store =  {
       mutations:{
         setCarDetail(state,payload){
           state.carDetail = payload
-          console.log(payload);
         }
       },
       actions:{
