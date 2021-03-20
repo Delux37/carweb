@@ -32,7 +32,8 @@
 
 
 <script>
-import infoCard from '../../UI/info-card'
+import infoCard from '../../UI/cards/info-card.vue'
+
 export default {
 props: ['info'],
 components:{

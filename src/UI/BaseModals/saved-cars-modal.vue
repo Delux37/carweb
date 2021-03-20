@@ -18,7 +18,6 @@
                 />
               </div>
               <div class="loader" v-else>
-                
                 <loading-spinner id="loading-spinner" />
               </div>
 
@@ -34,7 +33,7 @@
 </template>
 
 <script>
-import itemCard from './item-card.vue'
+import itemCard from '../cards/saved-cars-card.vue'
 import loadingSpinner from '../loading/loading-spinner.vue'
 // brand image location price
 export default{

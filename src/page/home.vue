@@ -26,8 +26,8 @@
 
 <script>
 import axios from 'axios'
-import itemCard from '../UI/item-card.vue'
-import cardSkeletonLoader from '../UI/cardSkeletonLoader.vue'
+import itemCard from '../UI/cards/item-card.vue'
+import cardSkeletonLoader from '../UI/loading/cardSkeletonLoader.vue'
 // import navBar from '../components/nav-bar.vue';
 export default {
     components: {

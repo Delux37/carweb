@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import BaseInfo from '../../UI/BaseInfo.vue'
+import BaseInfo from '../../UI/BaseModals/BaseInfo.vue'
 
 export default {
     components: {

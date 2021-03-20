@@ -14,7 +14,7 @@ import mainFeatures from '../components/add-page/car-main-features.vue'
 import comfortDetails from '../components/add-page/comfort-details.vue'
 import fileUpload from '../components/add-page/file-upload.vue'
 import userDetail from '../components/add-page/user-detail.vue'
-import baseButton from '../UI/BaseButton.vue'
+import baseButton from '../UI/BaseModals/BaseButton.vue'
 
 export default {
     components: {
