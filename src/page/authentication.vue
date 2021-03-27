@@ -49,11 +49,12 @@ export default{
                         router: this.$router
                     });                   
                 }else{
-                    this.$store.dispatch('auth', {
-                        email: this.email,
-                        password: this.password,
-                        mode: 'signup'
-                    });
+                    console.log('SignUp disabled.')
+                    // this.$store.dispatch('auth', {
+                    //     email: this.email,
+                    //     password: this.password,
+                    //     mode: 'signup'
+                    // });
                 }
                 // this.$router.replace('/')
             }catch(err){
