@@ -4,6 +4,11 @@ import Home from '../page/home.vue'
 import add from '../page/add.vue'
 import auth from '../page/authentication.vue'
 import carDetail from '../page/carDetail.vue'
+import settingsPage from '../page/settings-page.vue'
+import savedCars from '../page/settingsFolder/saved-cars.vue'
+import myCars from '../page/settingsFolder/myCars/my-cars.vue'
+import balance from '../page/settingsFolder/balance.vue'
+import editCarPage from '../page/settingsFolder/myCars/edit-car.vue'
 import NotFound from '../UI/notFound.vue'
 // import store from '../store/index.js'
 
@@ -21,6 +26,14 @@ const routes = [
 },
 {
   path: '/cardetail/:userId/:carId', component: carDetail, name: 'carDetail'
+},
+{
+  path: '/settings', component: settingsPage, children: [
+    {path: 'saved-cars', component: savedCars},
+    {path: 'my-cars', component: myCars},
+    {path: 'my-cars/edit/:carId', component: editCarPage},
+    {path: 'balance', component: balance}
+  ]
 },
 {
   path: '/:notFound(.*)', component: NotFound 

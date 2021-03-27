@@ -1,10 +1,11 @@
 <template>
-    <div>
+    <div id="test">
         <main-features @clicked="addCarMainFeatures"></main-features>
         <comfort-details @clicked="addCarComforts"></comfort-details>
         <file-upload @clicked="addDetail"></file-upload>
         <user-detail @clicked="addUserDetail"></user-detail>
-        <base-button mode="submit" id="btn" @toggleLogIn="sendPostRequest">Submit</base-button>
+        <base-button v-if="!isComponent" mode="submit" id="btn" @toggleLogIn="sendPostRequest">Submit</base-button>
+        <base-button v-else mode="submit" id="btn" @toggleLogIn="saveData">Save</base-button>
     </div>
 </template>
 
@@ -17,6 +18,7 @@ import userDetail from '../components/add-page/user-detail.vue'
 import baseButton from '../UI/BaseModals/BaseButton.vue'
 
 export default {
+    props: ['isComponent'],
     components: {
         mainFeatures,
         comfortDetails,
@@ -51,8 +53,9 @@ export default {
         }
     },
     methods: {
-        testInfo(){
-            console.log(this.carCardInfo);
+        saveData(){
+            console.log('CARD', this.carCardInfo);
+            console.log('DETAIL', this.carInfo)
         },
         sendPostRequest() {
             const token = this.$store.getters.token;
@@ -88,6 +91,11 @@ export default {
         addUserDetail(val, location){
             this.carInfo.userDetail = val;
             this.carCardInfo.location = location
+        }
+    },
+    computed: {
+        data(){
+            return this.$store.getters.editPageData
         }
     }
    

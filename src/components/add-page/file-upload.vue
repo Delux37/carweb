@@ -41,6 +41,7 @@
 
 <script>
 export default {
+    props: ['newPrice', 'newImages', 'newDescription'],
      data(){
         return {    
             /*IMAGES SECTION*/
@@ -68,11 +69,26 @@ export default {
             this.image = files[0]
         },
     },
+    mounted(){
+        if(this.data){
+            if(this.data.price && this.data.description && this.data.images.length){
+                this.price= this.data.price
+                this.description = this.data.description
+                this.images = this.data.images
+            }
+        }else{
+            console.log('No data')
+        }
+    },
     computed: {
         val(){
             this.$emit('clicked', this.images, this.price, this.description);
             return this.images && this.price && this.description
         },
+
+        data(){
+            return this.$store.getters.editPageData
+        }
     },
     watch: {
         val() {}

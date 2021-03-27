@@ -43,10 +43,21 @@ export default {
             }
         }
     },
+    mounted(){
+        if(this.data){
+            if(this.data.userDetail){
+                this.userInfo = this.data.userDetail
+            }
+        }
+    },
     computed: {
         val(){
             this.$emit('clicked', this.userInfo, this.userInfo.location)
             return this.userDetail;
+        },
+
+        data(){
+            return this.$store.getters.editPageData
         }
     },
     watch: {

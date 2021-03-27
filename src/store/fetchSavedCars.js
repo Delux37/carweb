@@ -5,7 +5,8 @@ const store = {
         isDisplayed: false,
         savedCarsList: null,
         savedCars: [],
-        isLoading: true
+        isLoading: true,
+        newList: []
     },
     mutations: {
         pushSavedCars(state, payload){
@@ -13,6 +14,9 @@ const store = {
         },
         addSavedCars(state, payload){
             state.savedCars.push(payload)
+        },
+        addSettingsSavedCars(state,payload){
+            state.newList.push(payload)
         },
         toggle(state){
             state.isDisplayed = !state.isDisplayed;
@@ -26,15 +30,19 @@ const store = {
         addNewList(state,payload){
             state.savedCars = payload.newSavedCars
             state.savedCarsList = payload.newSavedCarsList
+        },
+        deleteNewList(state){
+            state.newList = []
         }
     },
     actions: {
-        fetchSavedCars(context, payload){
+        fetchSavedCars(context, param){
+            const payload = param.data
             for(const key in payload){
                 axios.get(`https://carweb-797f8-default-rtdb.firebaseio.com/carList/${payload[key]['carOwnerUserId']}/${payload[key]['carId']}/carCardInfo.json`)
                 .then((response) => {
                     // handle success
-                    // console.log(response.data)
+                    // console.log(response.data.length)
                     const tempData = {
                         image: response.data['firstImage'],
                         brand: response.data['brand']+' ' + response.data['model'],
@@ -43,7 +51,11 @@ const store = {
                         userId: payload[key]['carOwnerUserId'],
                         carId: payload[key]['carId']
                     }
-                    context.commit('addSavedCars', tempData);
+                    if(param.forSettings){
+                        context.commit('addSettingsSavedCars', tempData);
+                    }else{
+                        context.commit('addSavedCars', tempData);
+                    }
                 })
             }
 
@@ -71,6 +83,9 @@ const store = {
                 newSavedCarsList: payload.newSavedCarsList,
                 newSavedCars: payload.newSavedCars
             })
+        },
+        deleteNewList(context){
+            context.commit('deleteNewList')
         }
     },
     getters: {
@@ -85,6 +100,9 @@ const store = {
         },
         isLoading(state){
             return state.isLoading
+        },
+        settingsSavedCars(state){
+            return state.newList
         }
     }
 }

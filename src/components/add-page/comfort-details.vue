@@ -90,6 +90,8 @@ export default {
                 steeringWheelSide: null,
                 sellingType: null,
                 comforts: [],
+
+
             }
         }
     },
@@ -98,6 +100,23 @@ export default {
             this.$emit("clicked", this.carComfortDetails)
             return this.carComfortDetails
         },
+
+        data(){
+            return this.$store.getters.editPageData
+        }
+    },
+     mounted(){
+        if(this.data){
+            if(this.data.carComforts){
+                for(let i in this.data.carComforts.comforts){
+                    this.carComfortDetails.comforts.push(this.data.carComforts.comforts[i])
+                }
+                this.carComfortDetails.sellingType = this.data.carComforts.sellingType
+                this.carComfortDetails.steeringWheelSide = this.data.carComforts.steeringWheelSide
+            }else{
+                console.log('noLength')
+            }
+        }
     },
     watch: {
         carComfs(){}

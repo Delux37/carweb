@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper" :class="{newWrapper: data}">
         <header>
             <p>Car main fetaures</p>
         </header>
@@ -152,6 +152,32 @@ export default {
             const tags = [this.carMainFeatures.fuelType, this.carMainFeatures.category]
             this.$emit('clicked', this.carMainFeatures, this.carMainFeatures.brand, this.carMainFeatures.model, this.carMainFeatures.year, tags);
             return this.carMainFeatures;
+        },
+        
+        
+        data(){
+            return this.$store.getters.editPageData
+        }
+    },
+    mounted(){
+        if(this.data){
+            if(this.data.carMAinFeatures){
+                const tempFeatures = []
+                for(let key in this.data.carMAinFeatures){
+                    tempFeatures.push(
+                        {
+                            key,
+                            value: this.data.carMAinFeatures[key]
+                        }
+                    )
+                }
+
+                tempFeatures.forEach((elem) => {
+                    if(this.carMainFeatures[elem.key] === null){
+                        this.carMainFeatures[elem.key] = elem.value
+                    }
+                })
+            }
         }
     },
     watch:{
@@ -165,12 +191,13 @@ header{
     width: 30%;
     color: #ffbe46;
     margin-bottom: 10px;
-    /* border-top: 1px solid rgb(124, 124, 124); */
-    /* border-bottom: 1px solid rgb(124, 124, 124); */
 }
 .wrapper{
     width: 80%;       
     margin: 150px auto;
+}
+.newWrapper{
+    margin-top: 20px;
 }
 .container{
     width: 100%;

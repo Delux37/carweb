@@ -44,7 +44,7 @@ export default{
   },
   mounted(){
     this.$store.dispatch('toggleLoading', true)
-    this.$store.dispatch('fetchSavedCars', this.$store.getters.savedCarsList);
+    this.$store.dispatch('fetchSavedCars', {data: this.$store.getters.savedCarsList, forSettings:false});
   },
   computed:{
     carList(){

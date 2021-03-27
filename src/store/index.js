@@ -6,6 +6,7 @@ import zoomImage from './zoomImage.js'
 import cart from './cart.js'
 import fetchSavedCars from './fetchSavedCars.js'
 
+import axios from 'axios'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -14,6 +15,35 @@ export default new Vuex.Store({
     fetchDetail,
     zoomImage,
     cart,
-    fetchSavedCars
+    fetchSavedCars,
   },
+    state() {
+      return {
+        editPageData: null,
+      }
+    },
+    mutations:{
+      setData(state, payload){
+          state.editPageData = payload
+      },
+      clearData(state){
+        state.editPageData = null
+      }
+    },
+    actions:{
+      fetchEditPageDetail(context, payload){
+          axios.get(`https://carweb-797f8-default-rtdb.firebaseio.com/carList/${payload.userId}/${payload.carId}/carDetail.json`)
+          .then((res) => {
+             context.commit('setData', res.data)
+          })
+      },
+      clearEditPageData({commit}){
+        commit('clearData')
+      }
+    },
+    getters: {
+      editPageData(state){
+          return state.editPageData
+      }
+    }
 })
