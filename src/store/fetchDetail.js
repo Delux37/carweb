@@ -9,6 +9,9 @@ const store =  {
       mutations:{
         setCarDetail(state,payload){
           state.carDetail = payload
+        },
+        cleanData(state){
+          state.carDetail = null;
         }
       },
       actions:{
@@ -18,6 +21,9 @@ const store =  {
               // handle success
               commit('setCarDetail', response.data);
           })
+        },
+        cleanData({commit}){
+          commit('cleanData');
         }
       },
       getters:{

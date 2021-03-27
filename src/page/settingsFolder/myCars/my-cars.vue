@@ -12,6 +12,9 @@
             @editMyCar="editMyCar"
             ></myCarsCard>
         </div>
+        <div v-else id="loading">
+            <loadingSpinner />
+        </div>
     </div>
 </template>
 
@@ -19,9 +22,12 @@
 <script>
 import axios from 'axios'
 import myCarsCard from './my-cars-card.vue'
+import loadingSpinner from '../../../UI/loading/loading-spinner.vue'
+
 export default {
     components: {
-        myCarsCard
+        myCarsCard,
+        loadingSpinner
     },
     data(){
         return {
@@ -57,6 +63,12 @@ methods:{
 </script>
 
 <style scoped>
+#loading{
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 /* .test{
     border: 2px solid blue;
     width: 300px;

@@ -5,7 +5,7 @@
                 <li><router-link to="/settings/my-cars">My cars</router-link></li>
                 <li><router-link to="/settings/saved-cars">My saved cars</router-link></li>
                 <li><router-link to="/settings/balance">Balance</router-link></li>
-                <li><router-link to=#>Additional settings</router-link></li>
+                <li><router-link to="/settings/user-settings">User settings</router-link></li>
                 
             </ul>
         </div>
@@ -14,12 +14,6 @@
         </div>
     </div>
 </template>
-
-<script>
-export default {
-    
-}
-</script>
 
 <style scoped>
 #wrapper{
@@ -57,6 +51,5 @@ a{
 }
 #content-div{
     width: 70%;
-    bordeR: 2px solid blue;
 }
 </style>

@@ -54,8 +54,13 @@ export default {
     },
     methods: {
         saveData(){
-            console.log('CARD', this.carCardInfo);
-            console.log('DETAIL', this.carInfo)
+            const token = this.$store.getters.token;
+            const userId = this.$store.getters.userId
+
+            axios.put(`https:carweb-797f8-default-rtdb.firebaseio.com/carList/${userId}/${this.$route.params.carId}.json?auth=` + token,{
+                carDetail: this.carInfo,
+                carCardInfo: this.carCardInfo
+            });
         },
         sendPostRequest() {
             const token = this.$store.getters.token;

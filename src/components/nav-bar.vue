@@ -12,16 +12,25 @@
                 <li v-if="!isAuthenitcated">
                     <base-button mode="flat" link=true to="/authentication">Log in</base-button>
                 </li>
-                <li v-else>
-                    <base-button mode="flat" @toggleLogIn="logOut">Log out</base-button>
-                </li>
-                <li id="menu"><i class="fas fa-bars hamburger">
-                    <div id="drop-down">
-                    <ul>
-                        <li>Contact</li>
-                    </ul>
-                </div>
-                </i>
+                <li v-else id="dropdown-list-item">
+                    <div id="dropdown">
+                        <div>
+                            <i class="fas fa-user-alt user"></i>
+                        </div>
+                    </div>
+                    <span>My page</span>
+                    <i class="fas fa-caret-down"></i>
+                    <transition name="dropdown">
+                        <ul id="dropdown-menu">
+                            <li><router-link to="/settings/my-cars">My cars</router-link></li>
+                            <li><router-link to="/settings/saved-cars">My saved cars</router-link></li>
+                            <li><router-link to="/settings/balance">Balance</router-link></li>
+                            <li><router-link to="/settings/user-settings">User settings</router-link></li>
+                            <hr/>
+                            <li><p @click="logOut">Log out</p></li>
+                        </ul>
+                    </transition>
+                    <!-- <base-button mode="flat" @toggleLogIn="logOut">Log out</base-button> -->
                 </li>
             </ul>
         </nav>
@@ -66,11 +75,66 @@ export default {
 
 
 <style scoped>
-.saved_container{
+a{
+    text-decoration: none;
+    color: black;
+}
+li p {
+    margin-bottom: 5px;
+}
+
+#dropdown-menu{
+    display: none;
+    position: absolute;
+    background-color: white;
+    border-radius: 5px;
+    top: 55px;
+    right: 0;
+    width: 100%;
+    font-weight: 100;
+}
+#dropdown-menu li{
+    width: 100%;
+    list-style: none;
+    padding-left: 5px;
+}
+#dropdown-menu li:hover{
+    background-color: rgb(204, 204, 204);
+}
+
+
+#dropdown-list-item{
+    display: flex;
+    column-gap: 5px;
     position: relative;
 }
-#menu:hover #drop-down{
-    display: block;
+#dropdown-list-item:hover{
+    cursor: pointer;
+}
+#dropdown-list-item:hover #dropdown-menu{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+#dropdown{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 5px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.user{
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 40px;
+}
+
+.saved_container{
+    position: relative;
 }
 #nav{
     width: 100%;
@@ -114,25 +178,12 @@ export default {
     margin-right: 15px;
 }
 
-#main-nav li{
+#main-nav > li{
     display: inline-block;
     margin-left: 15px;
     display: flex;
     align-items: center;
 }
 
-#drop-down{
-    background-color: white;
-    position: absolute;
-    border-radius: 15px;
-    width: 10%;
-    height: 200px;
-    right: 1vh;
-    top: 8vh;
-    display: none;
-}
 
-.hamburger:hover{
-    cursor: pointer;
-}
 </style>

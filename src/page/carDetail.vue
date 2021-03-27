@@ -46,6 +46,9 @@ mounted(){
         carId : this.$route.params.carId
     })
 },
+destroyed(){
+    this.$store.dispatch('cleanData')
+},
 watch: {
     isZoomed() {
        window.scrollTo(0,0);

@@ -51,7 +51,7 @@ mounted(){
 #saved{
     position: absolute;
     right: 10px;
-    top: -10px;
+    top: 0;
     font-size: 10px;
     background-color: rgb(0, 162, 255);
     color: white;
